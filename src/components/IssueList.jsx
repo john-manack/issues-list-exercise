@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Route, Link } from 'react-router-dom';
 import Issue from './Issue';
 
 class IssueList extends Component {
@@ -26,22 +27,33 @@ class IssueList extends Component {
 
     render () {
         const { issueData } = this.state;
+        console.log('issueData is: ', issueData);
         return (
-            <ul>
-                {!!issueData ? (
-                    issueData.map((issue) => {
-                        return (
-                            <li>
-                                <h2>Issue: <em>{issue.title}</em></h2>
-                                <p>Link to Issue: <a href={issue.html_url} rel="noreferrer" target="_blank">{issue.html_url}</a></p>
-                                <Issue body={issue.body} key={issue.id}/>
-                            </li>
-                        )
-                    })
-                ) : (
-                    <p>Loading issues...</p>
-                )}
-            </ul>
+            <>
+                <Route exact path='/'>
+                    <ul>
+                        {!!issueData ? (
+                            issueData.map(issue => {
+                                return (
+                                    <div key={issue.id}>
+                                        <li>
+                                            <h2>Issue: <em>{issue.title}</em></h2>
+                                            <Link to={`/issue/${issue.number}`}>
+                                                View Issue
+                                            </Link>
+                                        </li>
+                                    </div>
+                                )
+                            })
+                        ) : (
+                            <p>Loading issues...</p>
+                        )}
+                    </ul>
+                </Route>
+                <Route path='/issue/:issue_number'>
+                    <Issue issueData={issueData}/>
+                </Route>
+            </>
         )
     }
 }
