@@ -30,7 +30,13 @@ class IssueList extends Component {
             <ul>
                 {!!issueData ? (
                     issueData.map((issue) => {
-                        return <Issue title={issue.title} url={issue.html_url} body={issue.body} key={issue.id}/>
+                        return (
+                            <li>
+                                <h2>Issue: <em>{issue.title}</em></h2>
+                                <p>Link to Issue: <a href={issue.html_url} rel="noreferrer" target="_blank">{issue.html_url}</a></p>
+                                <Issue body={issue.body} key={issue.id}/>
+                            </li>
+                        )
                     })
                 ) : (
                     <p>Loading issues...</p>
