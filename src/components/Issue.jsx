@@ -1,14 +1,21 @@
+import { useParams } from 'react-router-dom';
+import ReactMarkdown from 'react-markdown/with-html';
 import './Issue.css';
-import ReactMarkdown from 'react-markdown/with-html'
 
 const Issue = (props) => {
-    const { title, url, body } = props;
+    const { issue_number } = useParams();
+    console.log('ISSUE NUMBER: ', issue_number)
+
+    const { issueData } = props;
+    console.log('issueData from props: ', issueData)
+    let issue = issueData.find(i => i.number === parseInt(issue_number));
+    console.log('ISSUE: ', issue)
+
     return (
-        <li>
-            <h2>Issue: <em>{title}</em></h2>
-            <p>Link to Issue: <a href={url} rel="noreferrer" target="_blank">{url}</a></p>
-            <ReactMarkdown children={body} />
-        </li>
+        <>
+            
+            <ReactMarkdown children={issue.body} />
+        </>
     );
 }
 
